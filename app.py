@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import logging
+
+
 
 # Creating a Flask App
 app = Flask(__name__)
@@ -13,6 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 # Creating a Model
 class Todo(db.Model):
